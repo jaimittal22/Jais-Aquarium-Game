@@ -5,11 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f48598a-cee1-41ba-a0a5-03e6bffe4fbb" name="Changes" comment="this is my aquarium game.">
-      <change afterPath="$PROJECT_DIR$/Conor.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/israel.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/referee.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ring.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/win.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Astronaut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Astronaut.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BasicGameApp.java" afterDir="false" />
@@ -59,6 +54,14 @@
       <option name="presentableId" value="Default" />
       <updated>1673632605380</updated>
     </task>
+    <task id="LOCAL-00001" summary="this is my aquarium game.">
+      <created>1675787216468</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1675787216468</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

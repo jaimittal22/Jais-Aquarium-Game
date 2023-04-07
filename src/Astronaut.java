@@ -19,6 +19,12 @@ public class Astronaut {
     public double lives;
     public double maxHealth;
 
+    public boolean north;
+    public boolean south;
+    public boolean east;
+    public boolean west;
+
+
     // METHOD DEFINITION SECTION
 
     // Constructor Definition
@@ -30,7 +36,7 @@ public class Astronaut {
     public Astronaut(int pXpos, int pYpos) {
         xpos = pXpos;
         ypos = pYpos;
-        dx = 5;
+        dx = 0;
         dy = 0;
         width = 110;
         height = 110;
@@ -46,6 +52,10 @@ public class Astronaut {
         xpos = xpos + dx;
         ypos = ypos + dy;
         rec = new Rectangle (xpos, ypos, height, width);
+//        if (north){
+//            dy = 3;
+//            dx = 0;
+//        }
     }
 //    public Astronaut(int pXpos, int pYpos) {
 //        xpos = pXpos;
@@ -87,6 +97,11 @@ public class Astronaut {
         ypos = ypos + dy;
         rec = new Rectangle (xpos, ypos, height, width);
 
+    }
+    public void step(){
+        xpos = xpos + dx;
+        ypos = ypos + dy;
+        rec = new Rectangle (xpos, ypos, height, width);
     }
 }
 

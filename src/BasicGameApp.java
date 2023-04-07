@@ -12,17 +12,23 @@
 //import java.awt.Canvas;
 
 //Graphics Libraries
+
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputListener;
 
 
 //*******************************************************************************
 // Class Definition Section
 
-public class BasicGameApp implements Runnable {
+public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
     //Variable Definition Section
     //Declare the variables used in the program
@@ -48,12 +54,12 @@ public class BasicGameApp implements Runnable {
     //These are things that are made up of more than one variable type
     private Astronaut Conor;
     private Astronaut israel;
+    //declare an array of controlledAstro
 
     private Astronaut referee;
-    public int counter=0;
+    public int counter = 0;
 
     public boolean winning;
-
 
 
     // Main method definition
@@ -71,24 +77,25 @@ public class BasicGameApp implements Runnable {
     public BasicGameApp() {
 
         setUpGraphics();
-
+        //sscanvas.addKeyListener(this);
         //variable and objects
         //create (construct) the objects needed for the game and load up
         ConorPic = Toolkit.getDefaultToolkit().getImage("Conor.jpeg");
         ringPic = Toolkit.getDefaultToolkit().getImage("ring.png");//load the picture
         israelPic = Toolkit.getDefaultToolkit().getImage("israel.jpeg");
         refereePic = Toolkit.getDefaultToolkit().getImage("referee.jpeg");
-        winPic=Toolkit.getDefaultToolkit().getImage("win.jpeg");
-        winning=false;
-        
+        winPic = Toolkit.getDefaultToolkit().getImage("win.jpeg");
+        winning = false;
+
         Conor = new Astronaut(120, 240);
         israel = new Astronaut(200, 420);
         referee = new Astronaut(0, 0);
-        israel.dy=-10;
-        israel.dx=10;
-        Conor.dy=-10;
-        Conor.dx=10;
-
+        // construct the array to hold the astro, it is empty
+        // fill each slot
+//        israel.dy = -10;
+//        israel.dx = 10;
+        Conor.dy = -10;
+        Conor.dx = 10;
 
 
     }// BasicGameApp()
@@ -111,26 +118,24 @@ public class BasicGameApp implements Runnable {
             pause(20); // sleep for 10 ms
         }
     }
-    public void change()
-    {
-        if(Conor.rec.intersects(israel.rec));
 
-        System.out. println("crash");
-        Conor.dx = 1*Conor.dx;
+    public void change() {
+        if (Conor.rec.intersects(israel.rec)) ;
+
+        //System.out.println("crash");
+        Conor.dx = 1 * Conor.dx;
         Conor.dy = -Conor.dy;
-        israel.dx = 1*israel.dx;
+        israel.dx = 1 * israel.dx;
         israel.dy = -israel.dy;
     }
 
 
-    public void crash()
-    {
-        if(Conor.rec.intersects(israel.rec) &&israel.isAlive == true &&Conor.isAlive == true)
-        {
-            System.out. println("crash");
-            Conor.dx = 1*Conor.dx;
+    public void crash() {
+        if (Conor.rec.intersects(israel.rec) && israel.isAlive == true && Conor.isAlive == true) {
+            // System.out.println("crash");
+            Conor.dx = 1 * Conor.dx;
             Conor.dy = -Conor.dy;
-            israel.dx = 1*israel.dx;
+            israel.dx = 1 * israel.dx;
             israel.dy = -israel.dy;
             //israel.isAlive = false;
             counter++;
@@ -139,36 +144,33 @@ public class BasicGameApp implements Runnable {
 //        if(counter==10){
 //            israel.isAlive=false;
 //        }
-        if(Conor.rec.intersects(referee.rec) &&referee.isAlive == true &&Conor.isAlive == true)
-        {
-            System.out. println("crash");
-            Conor.dx = 1*Conor.dx;
+        if (Conor.rec.intersects(referee.rec) && referee.isAlive == true && Conor.isAlive == true) {
+            System.out.println("crash");
+            Conor.dx = 1 * Conor.dx;
             Conor.dy = -Conor.dy;
-            referee.dx = 1*referee.dx;
+            referee.dx = 1 * referee.dx;
             referee.dy = -referee.dy;
-          //  referee.isAlive = false;
+            //  referee.isAlive = false;
             counter++;
             Conor.lives++;
         }
-        if(Conor.lives==0){
-            Conor.isAlive=false;
-            winning=true;
+        if (Conor.lives == 0) {
+            Conor.isAlive = false;
+            winning = true;
         }
 
     }
-    public void size()
-    {
-        if(Conor.rec.intersects(israel.rec))
-        {
-            Conor.height = 3*Conor.height;
-            Conor.width = 3*Conor.width;
-            israel.height = 3*israel.height;
-            israel.width = 3*israel.width;
+
+    public void size() {
+        if (Conor.rec.intersects(israel.rec)) {
+            Conor.height = 3 * Conor.height;
+            Conor.width = 3 * Conor.width;
+            israel.height = 3 * israel.height;
+            israel.width = 3 * israel.width;
         }
     }
 
-    public void moveThings()
-    {
+    public void moveThings() {
         //calls the move( ) code in the objects
         Conor.bounce();
         israel.bounce();
@@ -179,7 +181,7 @@ public class BasicGameApp implements Runnable {
     }
 
     //Pauses or sleeps the computer for the amount specified in milliseconds
-    public void pause(int time ){
+    public void pause(int time) {
         //sleep
         try {
             Thread.sleep(time);
@@ -199,6 +201,8 @@ public class BasicGameApp implements Runnable {
         // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
         // and trap input events (Mouse and Keyboard events)
         canvas = new Canvas();
+        canvas.addKeyListener(this);
+        canvas.addMouseListener(this);
         canvas.setBounds(0, 0, WIDTH, HEIGHT);
         canvas.setIgnoreRepaint(true);
 
@@ -224,39 +228,104 @@ public class BasicGameApp implements Runnable {
         Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
-        if(winning == false){
+        if (winning == false) {
 
 
-        //draw the image of the astronaut
-        g.drawImage(ringPic, 0, 0, WIDTH, HEIGHT, null);
-        if (Conor.isAlive == true) {
-            g.drawImage(ConorPic, Conor.xpos, Conor.ypos, Conor.width, Conor.height, null);
-            g.draw(new Rectangle(Conor.xpos, Conor.ypos, Conor.width, Conor.height));
-        }
-        g.setColor(Color.red);
-        g.fillRect(Conor.xpos, Conor.ypos - 10, Conor.width, 10);
-        g.setColor(Color.green);
+            //draw the image of the astronaut
+            g.drawImage(ringPic, 0, 0, WIDTH, HEIGHT, null);
+            if (Conor.isAlive == true) {
+                g.drawImage(ConorPic, Conor.xpos, Conor.ypos, Conor.width, Conor.height, null);
+                g.draw(new Rectangle(Conor.xpos, Conor.ypos, Conor.width, Conor.height));
+            }
+            g.setColor(Color.red);
+            g.fillRect(Conor.xpos, Conor.ypos - 10, Conor.width, 10);
+            g.setColor(Color.green);
 
-        double calc = (Conor.lives / Conor.maxHealth);
+            double calc = (Conor.lives / Conor.maxHealth);
 
-        System.out.println(calc);
-        // System.out.println(Conor.maxHealth);
+         //   System.out.println(calc);
+            // System.out.println(Conor.maxHealth);
 
-        //   double calc = (Conor.lives/Conor.maxHealth);
-        g.fillRect(Conor.xpos, Conor.ypos - 10, (int) (Conor.width * (Conor.lives / Conor.maxHealth)), 10);
+            //   double calc = (Conor.lives/Conor.maxHealth);
+            g.fillRect(Conor.xpos, Conor.ypos - 10, (int) (Conor.width * (Conor.lives / Conor.maxHealth)), 10);
 
-        g.drawImage(israelPic, israel.xpos, israel.ypos, israel.width, israel.height, null);
-        g.drawImage(refereePic, referee.xpos, referee.ypos, referee.width, referee.height, null);
+            g.drawImage(israelPic, israel.xpos, israel.ypos, israel.width, israel.height, null);
+            g.drawImage(refereePic, referee.xpos, referee.ypos, referee.width, referee.height, null);
 
-        g.draw(new Rectangle(israel.xpos, israel.ypos, israel.width, israel.height));
-        g.draw(new Rectangle(referee.xpos, referee.ypos, referee.width, referee.height));
-    }
-        else{
+            g.draw(new Rectangle(israel.xpos, israel.ypos, israel.width, israel.height));
+            g.draw(new Rectangle(referee.xpos, referee.ypos, referee.width, referee.height));
+        } else {
             g.drawImage(winPic, 0, 0, WIDTH, HEIGHT, null);
         }
 
         g.dispose();
 
         bufferStrategy.show();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int code = e.getKeyCode();
+        System.out.println(code);
+        if (code == 83) {
+            israel.dy=Math.abs(israel.dy);
+            israel.dy = israel.dy + 1;
+//            israel.dx = 0;
+        }
+        if (code == 87) {
+            israel.dy = +israel.dy - 1;
+//            israel.dx = 0;
+        }
+        if (code == 65) {
+            israel.dx = israel.dx - 1;
+        }
+        if (code == 68) {
+            israel.dx = israel.dx + 1;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+System.out.print("mouse is here");   
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 }
