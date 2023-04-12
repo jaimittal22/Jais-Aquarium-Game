@@ -38,6 +38,8 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
     final int WIDTH = 1000;
     final int HEIGHT = 700;
 
+    public Astronaut [] characters;
+
     //Declare the variables needed for the graphics
     public JFrame frame;
     public Canvas canvas;
@@ -80,6 +82,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
         //sscanvas.addKeyListener(this);
         //variable and objects
         //create (construct) the objects needed for the game and load up
+        characters = new Astronaut[3];
         ConorPic = Toolkit.getDefaultToolkit().getImage("Conor.jpeg");
         ringPic = Toolkit.getDefaultToolkit().getImage("ring.png");//load the picture
         israelPic = Toolkit.getDefaultToolkit().getImage("israel.jpeg");
@@ -90,12 +93,22 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
         Conor = new Astronaut(120, 240);
         israel = new Astronaut(200, 420);
         referee = new Astronaut(0, 0);
+
+        Conor.pic = ConorPic;
+        israel.pic= israelPic;
+        referee.pic = refereePic;
         // construct the array to hold the astro, it is empty
         // fill each slot
 //        israel.dy = -10;
 //        israel.dx = 10;
         Conor.dy = -10;
         Conor.dx = 10;
+        referee.dx = 1;
+
+
+        characters [0] = referee;
+        characters [1] = Conor;
+        characters [2] = israel;
 
 
     }// BasicGameApp()
@@ -233,10 +246,15 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
             //draw the image of the astronaut
             g.drawImage(ringPic, 0, 0, WIDTH, HEIGHT, null);
-            if (Conor.isAlive == true) {
-                g.drawImage(ConorPic, Conor.xpos, Conor.ypos, Conor.width, Conor.height, null);
-                g.draw(new Rectangle(Conor.xpos, Conor.ypos, Conor.width, Conor.height));
+            for (int z=0; z< characters.length; z++){
+                if (characters[z].isAlive == true) {
+                    g.drawImage(characters[z].pic, characters[z].xpos, characters[z].ypos, characters[z].width, characters[z].height, null);
+
+                    g.draw(new Rectangle(characters[z].xpos, characters[z].ypos, characters[z].width, characters[z].height));
+                }
             }
+
+
             g.setColor(Color.red);
             g.fillRect(Conor.xpos, Conor.ypos - 10, Conor.width, 10);
             g.setColor(Color.green);
@@ -249,11 +267,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
             //   double calc = (Conor.lives/Conor.maxHealth);
             g.fillRect(Conor.xpos, Conor.ypos - 10, (int) (Conor.width * (Conor.lives / Conor.maxHealth)), 10);
 
-            g.drawImage(israelPic, israel.xpos, israel.ypos, israel.width, israel.height, null);
-            g.drawImage(refereePic, referee.xpos, referee.ypos, referee.width, referee.height, null);
 
-            g.draw(new Rectangle(israel.xpos, israel.ypos, israel.width, israel.height));
-            g.draw(new Rectangle(referee.xpos, referee.ypos, referee.width, referee.height));
         } else {
             g.drawImage(winPic, 0, 0, WIDTH, HEIGHT, null);
         }
@@ -311,12 +325,12 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-System.out.print("mouse is here");   
+referee.dx=1;
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+referee.dx=0;
     }
 
     @Override

@@ -19,6 +19,8 @@ public class Astronaut {
     public double lives;
     public double maxHealth;
 
+    public Image pic;
+
     public boolean north;
     public boolean south;
     public boolean east;
