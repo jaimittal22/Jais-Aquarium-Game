@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f48598a-cee1-41ba-a0a5-03e6bffe4fbb" name="Changes" comment="this is my aquarium game.">
+    <list default="true" id="7f48598a-cee1-41ba-a0a5-03e6bffe4fbb" name="Changes" comment="The referee stops moving when the mouse exits the screen.">
+      <change afterPath="$PROJECT_DIR$/Lib/json-simple-1.1.1.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Astronaut.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Astronaut.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jais Aquarium Game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Jais Aquarium Game.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/BasicGameApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BasicGameApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,14 +34,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "jdk.selected.JAVA_MODULE": "1.8"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Lib" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
@@ -68,7 +71,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680886635876</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="The referee stops moving when the mouse exits the screen.">
+      <created>1681320444055</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681320444055</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -84,6 +94,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="this is my aquarium game." />
-    <option name="LAST_COMMIT_MESSAGE" value="this is my aquarium game." />
+    <MESSAGE value="The referee stops moving when the mouse exits the screen." />
+    <option name="LAST_COMMIT_MESSAGE" value="The referee stops moving when the mouse exits the screen." />
   </component>
 </project>
