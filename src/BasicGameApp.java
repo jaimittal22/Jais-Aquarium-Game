@@ -74,11 +74,12 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
     public int counter = 0;
 
     public boolean winning;
+    private JSONObject jsonObject;
 
 
     // Main method definition
     // This is the code that runs first and automatically
-    public static void main(String[] args) {
+    public static void main(String[] args)throws  ParseException {
         BasicGameApp ex = new BasicGameApp();   //creates a new instance of the game
         new Thread(ex).start();                 //creates a threads & starts up the code in the run( ) method
     }
@@ -88,9 +89,10 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
     // This has the same name as the class
     // This section is the setup portion of the program
     // Initialize your variables and construct your program objects here.
-    public BasicGameApp() {
+    public BasicGameApp() throws ParseException {
 
         setUpGraphics();
+        pull();
         //sscanvas.addKeyListener(this);
         //variable and objects
         //create (construct) the objects needed for the game and load up
@@ -170,7 +172,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 //            israel.isAlive=false;
 //        }
         if (Conor.rec.intersects(referee.rec) && referee.isAlive == true && Conor.isAlive == true) {
-            System.out.println("crash");
+            //System.out.println("crash");
             Conor.dx = 1 * Conor.dx;
             Conor.dy = -Conor.dy;
             referee.dx = 1 * referee.dx;
@@ -337,12 +339,12 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-referee.dx=1;
+        referee.dx=1;
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-referee.dx=0;
+        referee.dx=0;
     }
 
     @Override
@@ -359,7 +361,7 @@ referee.dx=0;
         String totlaJson="";
         try {
 
-            URL url = new URL("https://last-airbender-api.fly.dev/api/v1/characters");
+            URL url = new URL("https://api.sportradar.com/mma/trial/v2/en/champions.json?api_key=V3J5PM4W8n6yWcIsD5zdw4w65BIpMNta88GrtIQH");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -391,18 +393,21 @@ referee.dx=0;
 
         JSONParser parser = new JSONParser();
         //System.out.println(str);
-        jsonObject = (org.json.simple.JSONArray) parser.parse(totlaJson);
+        jsonObject = (org.json.simple.JSONObject) parser.parse(totlaJson);
         System.out.println(jsonObject);
 //System.out.println("hi");
         try {
-            for(int j = 0; j<jsonObject.size(); j++){
-                System.out.println(jsonObject.get(j));
-                JSONObject secretTunnelGuy = (JSONObject) jsonObject.get(j);
-                System.out.println(secretTunnelGuy.get("name"));
-                JSONArray ally1 = (JSONArray) secretTunnelGuy.get("allies");
-                System.out.println(ally1.get(0));
-            }
+  JSONArray categories = (JSONArray) jsonObject.get("categories");
+  System.out.println(categories);
 
+//            for(int j = 0; j<jsonObject.size(); j++){
+//                System.out.println(jsonObject.get(j));
+//                JSONObject secretTunnelGuy = (JSONObject) jsonObject.get(j);
+//                System.out.println(secretTunnelGuy.get("name"));
+//                JSONArray ally1 = (JSONArray) secretTunnelGuy.get("allies");
+//                System.out.println(ally1.get(0));
+//            }
+//
 
 
 
