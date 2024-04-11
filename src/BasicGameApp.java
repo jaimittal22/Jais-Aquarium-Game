@@ -29,6 +29,7 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
+import java.sql.SQLOutput;
 import java.text.*;
 
 import org.json.simple.JSONArray;
@@ -398,8 +399,25 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 //System.out.println("hi");
         try {
   JSONArray categories = (JSONArray) jsonObject.get("categories");
-  System.out.println(categories);
+            for (int x = 0; x<1;x++) {
+                JSONObject categoryObj = (JSONObject) categories.get(x);
+                System.out.println(categoryObj);
+                JSONArray weightclasses = (JSONArray) categoryObj.get("weight_classes");
+                System.out.println(weightclasses);
+                System.out.println("Category: " + categoryObj.get("name"));
+                System.out.println("Weight class:");
 
+
+                for (int f = 0; f < weightclasses.size() ; f++) {
+                    JSONObject fighterObj = (JSONObject) weightclasses.get(f);
+                    //System.out.println(fighterObj);
+                    System.out.println(fighterObj.get("description"));
+                    JSONObject competitor = (JSONObject) fighterObj.get("competitor");
+                   // System.out.println(competitor);
+                    System.out.println(competitor.get("name"));
+
+                }
+            }
 //            for(int j = 0; j<jsonObject.size(); j++){
 //                System.out.println(jsonObject.get(j));
 //                JSONObject secretTunnelGuy = (JSONObject) jsonObject.get(j);
