@@ -76,6 +76,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
     public boolean winning;
     private JSONObject jsonObject;
+    public boolean gamestart = false;
 
 
     // Main method definition
@@ -90,6 +91,20 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
     // This has the same name as the class
     // This section is the setup portion of the program
     // Initialize your variables and construct your program objects here.
+    private void Fighters() {
+        fighters = new Fighter[] {
+                new Fighter("O'Malley, Sean", "bantamweight"),
+                new Fighter("Topuria, Ilia", "featherweight"),
+                new Fighter("Pantoja, Alexandre", "flyweight"),
+                new Fighter("Jones, Jon", "heavyweight"),
+                new Fighter("Pereira, Alex", "light_heavyweight"),
+                new Fighter("Edwards, Leon", "welterweight"),
+                new Fighter("Pennington, Raquel", "womens_bantamweight"),
+                new Fighter("Nunes, Amanda", "womens_featherweight"),
+                new Fighter("Grasso, Alexa", "womens_flyweight"),
+                new Fighter("Zhang, Weili", "womens_strawweight")
+        };
+    }
     public BasicGameApp() throws ParseException {
 
         setUpGraphics();
@@ -256,35 +271,52 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
         Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
-        if (winning == false) {
-
-
-            //draw the image of the astronaut
-            g.drawImage(ringPic, 0, 0, WIDTH, HEIGHT, null);
-            for (int z=0; z< characters.length; z++){
-                if (characters[z].isAlive == true) {
-                    g.drawImage(characters[z].pic, characters[z].xpos, characters[z].ypos, characters[z].width, characters[z].height, null);
-
-                    g.draw(new Rectangle(characters[z].xpos, characters[z].ypos, characters[z].width, characters[z].height));
+        if (gamestart == false){
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, WIDTH, HEIGHT);
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.BOLD, 20));
+            g.drawString("Select Your Fighter", WIDTH / 2 - 100, 50);
+            for (int i = 0; i < characters.length; i++) {
+                if (i == Fighters();) {
+                    g.setColor(Color.YELLOW); // Highlight the selected fighter
+                } else {
+                    g.setColor(Color.WHITE);
                 }
+                g.drawString(characters[i].name, 100, 100 + i * 30); // Assuming name property exists
             }
+        }
+        else {
+            if (winning == false) {
 
 
-            g.setColor(Color.red);
-            g.fillRect(Conor.xpos, Conor.ypos - 10, Conor.width, 10);
-            g.setColor(Color.green);
+                //draw the image of the astronaut
+                g.drawImage(ringPic, 0, 0, WIDTH, HEIGHT, null);
+                for (int z = 0; z < characters.length; z++) {
+                    if (characters[z].isAlive == true) {
+                        g.drawImage(characters[z].pic, characters[z].xpos, characters[z].ypos, characters[z].width, characters[z].height, null);
 
-            double calc = (Conor.lives / Conor.maxHealth);
-
-         //   System.out.println(calc);
-            // System.out.println(Conor.maxHealth);
-
-            //   double calc = (Conor.lives/Conor.maxHealth);
-            g.fillRect(Conor.xpos, Conor.ypos - 10, (int) (Conor.width * (Conor.lives / Conor.maxHealth)), 10);
+                        g.draw(new Rectangle(characters[z].xpos, characters[z].ypos, characters[z].width, characters[z].height));
+                    }
+                }
 
 
-        } else {
-            g.drawImage(winPic, 0, 0, WIDTH, HEIGHT, null);
+                g.setColor(Color.red);
+                g.fillRect(Conor.xpos, Conor.ypos - 10, Conor.width, 10);
+                g.setColor(Color.green);
+
+                double calc = (Conor.lives / Conor.maxHealth);
+
+                //   System.out.println(calc);
+                // System.out.println(Conor.maxHealth);
+
+                //   double calc = (Conor.lives/Conor.maxHealth);
+                g.fillRect(Conor.xpos, Conor.ypos - 10, (int) (Conor.width * (Conor.lives / Conor.maxHealth)), 10);
+
+
+            } else {
+                g.drawImage(winPic, 0, 0, WIDTH, HEIGHT, null);
+            }
         }
 
         g.dispose();
