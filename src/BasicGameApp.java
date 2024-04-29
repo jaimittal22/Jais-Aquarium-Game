@@ -17,7 +17,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import java.io.BufferedReader;
@@ -29,8 +28,6 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
-import java.sql.SQLOutput;
-import java.text.*;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -72,6 +69,8 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
     public Image penningtonPic;
     public Image sugaPic;
     public Image topuriaPic;
+    public Image alexPic;
+    public Image grassoPic;
 
     public Image weiliPic;
     //Declare the objects used in the program
@@ -90,13 +89,14 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
     private Astronaut topuria;
     private Astronaut weili;
     private Astronaut suga;
-
-
+    Image[] characterImages;
+    int currentCharacterIndex = 0;
     public int counter = 0;
 
     public boolean winning;
     private JSONObject jsonObject;
     public boolean gamestart = false;
+    public String []fighterOptions;
 
     public int currentImageIndex = 0;  // Index of the currently selected fighter
 
@@ -114,58 +114,38 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
     // This section is the setup portion of the program
     // Initialize your variables and construct your program objects here.
 
-    private Image[] conorImages;
-    private int currentConorImageIndex = 0;
-
-    private void loadFighterImages() {
-        conorImages = new Image[]{Toolkit.getDefaultToolkit().getImage("Conor.jpeg"),
-                Toolkit.getDefaultToolkit().getImage("jonjones.png")
-                Toolkit.getDefaultToolkit().getImage("leon.png");
-            Toolkit.getDefaultToolkit().getImage("nunes.jpg");
-        };
-        Toolkit.getDefaultToolkit().getImage("leon.png");
-        Toolkit.getDefaultToolkit().getImage("nunes.jpg");
-        Toolkit.getDefaultToolkit().getImage("pantoja.jpg");
-        Toolkit.getDefaultToolkit().getImage("Pennington.png");
-        Toolkit.getDefaultToolkit().getImage("suga.jpg");
-        Toolkit.getDefaultToolkit().getImage("Topuria.jpg");
-        Toolkit.getDefaultToolkit().getImage("weili.jpg")};
-                Toolkit.getDefaultToolkit().getImage("israel.jpeg");
-        Toolkit.getDefaultToolkit().getImage("referee.jpeg");
-
-
-
-
-
 
     //}
     public BasicGameApp() throws ParseException {
-
+        fighterOptions = new String[10];
         setUpGraphics();
-        loadFighterImages();
+        loadCharacterImages();
         pull();
         //sscanvas.addKeyListener(this);
         //variable and objects
         //create (construct) the objects needed for the game and load up
-        characters = new Astronaut[11];
+        characters = new Astronaut[3];
+
         ConorPic = Toolkit.getDefaultToolkit().getImage("Conor.jpeg");
         ringPic = Toolkit.getDefaultToolkit().getImage("ring.png");//load the picture
         israelPic = Toolkit.getDefaultToolkit().getImage("israel.jpeg");
         refereePic = Toolkit.getDefaultToolkit().getImage("referee.jpeg");
         jonPic = Toolkit.getDefaultToolkit().getImage("jonjones.png");
         leonPic = Toolkit.getDefaultToolkit().getImage("leon.png");
-        nunesPic =         Toolkit.getDefaultToolkit().getImage("pantoja.jpg");
-        pantojaPic =         Toolkit.getDefaultToolkit().getImage("pantoja.jpg");
-        penningtonPic =         Toolkit.getDefaultToolkit().getImage("Pennington.png");
-        sugaPic =         Toolkit.getDefaultToolkit().getImage("suga.jpg");
-        topuriaPic =         Toolkit.getDefaultToolkit().getImage("Topuria.jpg");
+        nunesPic = Toolkit.getDefaultToolkit().getImage("nunes.jpg");
+        pantojaPic = Toolkit.getDefaultToolkit().getImage("pantoja.jpg");
+        penningtonPic = Toolkit.getDefaultToolkit().getImage("Pennington.png");
+        sugaPic = Toolkit.getDefaultToolkit().getImage("suga.jpg");
+        topuriaPic = Toolkit.getDefaultToolkit().getImage("Topuria.jpg");
         weiliPic = Toolkit.getDefaultToolkit().getImage("weili.jpg");
+        alexPic = Toolkit.getDefaultToolkit().getImage("alex.jpg");
+        grassoPic = Toolkit.getDefaultToolkit().getImage("grasso.jpg");
 
         winPic = Toolkit.getDefaultToolkit().getImage("win.jpeg");
         winning = false;
 
         Conor = new Astronaut(120, 240);
-        jonjones =  new Astronaut(120, 240);
+        jonjones = new Astronaut(120, 240);
         leon = new Astronaut(120, 240);
         nunes = new Astronaut(120, 240);
         pantoja = new Astronaut(120, 240);
@@ -178,7 +158,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
         jonjones.pic = jonPic;
         Conor.pic = ConorPic;
-        israel.pic= israelPic;
+        israel.pic = israelPic;
         referee.pic = refereePic;
         leon.pic = leonPic;
         nunes.pic = nunesPic;
@@ -196,23 +176,42 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
         referee.dx = 1;
 
 
-        characters [0] = referee;
-        characters [1] = Conor;
-        characters [2] = israel;
-        characters [3] = jonjones;
-        characters [4] = leon;
-        characters [5] = nunes;
-        characters [6] = pantoja;
-        characters [7] = pennington;
-        characters [8] = suga;
-        characters [9] = topuria;
-        characters [10] = weili;
-
-
-
+        characters[0] = referee;
+        characters[1] = Conor;
+        characters[2] = israel;
+//        characters[3] = jonjones;
+//        characters[4] = leon;
+//        characters[5] = nunes;
+//        characters[6] = pantoja;
+//        characters[7] = pennington;
+//        characters[8] = suga;
+//        characters[9] = topuria;
+//        characters[10] = weili;
 
 
     }// BasicGameApp()
+
+    private void loadCharacterImages() {
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+//        characterImages = new Image[]{
+//                Toolkit.getDefaultToolkit().getImage("Conor.jpeg"),
+//                Toolkit.getDefaultToolkit().getImage("jonjones.png"),
+//                Toolkit.getDefaultToolkit().getImage("leon.png"),
+//                Toolkit.getDefaultToolkit().getImage("nunes.jpg"),
+//                Toolkit.getDefaultToolkit().getImage("leon.png"),
+//                Toolkit.getDefaultToolkit().getImage("nunes.jpg"),
+//                Toolkit.getDefaultToolkit().getImage("pantoja.jpg"),
+//                Toolkit.getDefaultToolkit().getImage("Pennington.png"),
+//                Toolkit.getDefaultToolkit().getImage("suga.jpg"),
+//                Toolkit.getDefaultToolkit().getImage("Topuria.jpg"),
+//                Toolkit.getDefaultToolkit().getImage("weili.jpg")},
+//                Toolkit.getDefaultToolkit().getImage("israel.jpeg")
+//    }
+
+
+
+}
+
 
 
 //*******************************************************************************
@@ -222,16 +221,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
     // main thread
     // this is the code that plays the game after you set things up
-    public void run() {
 
-        //for the moment we will loop things forever.
-        while (true) {
-
-            moveThings();  //move all the game objects
-            render();  // paint the graphics
-            pause(20); // sleep for 10 ms
-        }
-    }
 
     public void change() {
         if (Conor.rec.intersects(israel.rec)) ;
@@ -306,34 +296,42 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
 
     //Graphics setup method
     private void setUpGraphics() {
-        frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
+        frame = new JFrame("Game Start Screen");
 
-        panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
-        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
-        panel.setLayout(null);   //set the layout
+        panel = (JPanel) frame.getContentPane();
+        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        panel.setLayout(null);
 
-        // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
-        // and trap input events (Mouse and Keyboard events)
+
         canvas = new Canvas();
-        canvas.addKeyListener(this);
-        canvas.addMouseListener(this);
         canvas.setBounds(0, 0, WIDTH, HEIGHT);
         canvas.setIgnoreRepaint(true);
 
-        panel.add(canvas);  // adds the canvas to the panel.
+        panel.add(canvas);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setResizable(false);
+        frame.setVisible(true);
 
-        // frame operations
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
-        frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
-        frame.setResizable(false);   //makes it so the frame cannot be resized
-        frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
 
-        // sets up things so the screen displays images nicely.
         canvas.createBufferStrategy(2);
         bufferStrategy = canvas.getBufferStrategy();
+        canvas.addKeyListener(this);
         canvas.requestFocus();
         System.out.println("DONE graphic setup");
 
+    }
+    public void run() {
+        while (true) {
+            moveThings();
+            render();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
 
@@ -348,13 +346,13 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 20));
             g.drawString("Select Your Fighter", WIDTH / 2 - 100, 50);
-            for (int i = 0; i < characters.length; i++) {
-                if () {
-                    g.setColor(Color.YELLOW); // Highlight the selected fighter
-                } else {
-                    g.setColor(Color.WHITE);
-                }
-                g.drawString(characters[i].name, 100, 100 + i * 30); // Assuming name property exists
+            for (int i = 0; i < fighterOptions.length; i++) {
+//                if () {
+//                    g.setColor(Color.YELLOW); // Highlight the selected fighter
+//                } else {
+//                    g.setColor(Color.WHITE);
+//                }
+                g.drawString(i+": "+fighterOptions[i], 100, 100 + i * 30); // Assuming name property exists
             }
         }
         else {
@@ -418,6 +416,47 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
         }
         if (code == 68) {
             israel.dx = israel.dx + 1;
+        }
+
+        if(code == 48){//o mally
+            characters[1].pic = sugaPic;
+            gamestart = true;
+        }
+        if(code == 49){
+            characters[1].pic = topuriaPic;
+            gamestart = true;
+        }
+        if(code == 50){
+            characters[1].pic = pantojaPic;
+            gamestart = true;
+        }
+        if(code == 51){
+            characters[1].pic = jonPic;
+            gamestart = true;
+        }
+        if(code == 52){
+            characters[1].pic = alexPic;
+            gamestart = true;
+        }
+        if(code == 53){
+            characters[1].pic = leonPic;
+            gamestart = true;
+        }
+        if(code == 54){
+            characters[1].pic = penningtonPic;
+            gamestart = true;
+        }
+        if(code == 55){
+            characters[1].pic = nunesPic;
+            gamestart = true;
+        }
+        if(code == 56){
+            characters[1].pic = grassoPic;
+            gamestart = true;
+        }
+        if(code == 57){
+            characters[1].pic = weiliPic;
+            gamestart = true;
         }
     }
 
@@ -509,7 +548,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
                 System.out.println(weightclasses);
                 System.out.println("Category: " + categoryObj.get("name"));
                 System.out.println("Weight class:");
-
+                System.out.println(weightclasses.size());
 
                 for (int f = 0; f < weightclasses.size() ; f++) {
                     JSONObject fighterObj = (JSONObject) weightclasses.get(f);
@@ -518,6 +557,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseInputListener {
                     JSONObject competitor = (JSONObject) fighterObj.get("competitor");
                    // System.out.println(competitor);
                     System.out.println(competitor.get("name"));
+                    fighterOptions[f] = (String) competitor.get("name");
 
                 }
             }
